@@ -213,6 +213,10 @@ function M.is_valid_buf(buf)
   if vim.tbl_contains(Config.options.highlight.exclude, filetype) then
     return false
   end
+  local bufname = vim.api.nvim_buf_get_name(buf)
+  if bufname:find("Command Line") > 0 then
+    return false
+  end
   return true
 end
 
