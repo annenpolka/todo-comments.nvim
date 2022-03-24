@@ -214,7 +214,8 @@ function M.is_valid_buf(buf)
     return false
   end
   local bufname = vim.api.nvim_buf_get_name(buf)
-  if (bufname:find("Command Line") or 0) > 0 then
+  local sub_ind = bufname:find("Command Line")
+  if sub_ind ~= nil and sub_ind > 0 then
     return false
   end
   return true
