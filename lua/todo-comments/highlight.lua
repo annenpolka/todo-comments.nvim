@@ -191,6 +191,10 @@ function M.is_valid_win(win)
   if not vim.api.nvim_win_is_valid(win) then
     return false
   end
+  -- avoid E5108 after pressing q:
+  if vim.fn.getcmdwintype() ~= "" then
+    return false
+  end
   -- dont do anything for floating windows
   if M.is_float(win) then
     return false
@@ -206,7 +210,7 @@ end
 function M.is_valid_buf(buf)
   -- Skip special buffers
   local buftype = vim.api.nvim_buf_get_option(buf, "buftype")
-  if buftype ~= "" and (buftype ~= "nofile" or buftype ~= "quickfix") then
+  if buftype ~= "" and buftype ~= "quickfix" then
     return false
   end
   local filetype = vim.api.nvim_buf_get_option(buf, "filetype")
